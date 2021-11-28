@@ -1,0 +1,55 @@
+# In device_base.yaml
+esphome:
+  name: ${node_name}
+  platform: ESP8266
+  board: esp8285
+  platformio_options:
+    upload_speed: 19200
+  build_path: ./build/${node_name}
+
+packages:
+  device_base: !include device_base.yaml
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO3
+      inverted: True
+    name: "Button"
+    on_press:
+      - switch.toggle: relay
+
+switch:
+  - platform: gpio
+    id: led
+    pin: GPIO1
+
+  - platform: gpio
+    name:  ${device_name} Socket
+    pin: GPIO14
+    id: relay
+    on_turn_on:
+      - switch.turn_on: led
+    on_turn_off:
+      - switch.turn_off: led
+sensor:
+  - platform: hlw8012
+    sel_pin:
+      number: GPIO12
+      inverted: True
+    cf_pin: GPIO04
+    cf1_pin: GPIO05
+    current_resistor: 0.001
+    voltage_divider: 2180
+    current:
+      name: ${device_name} Current
+      unit_of_measurement: A
+    voltage:
+      name: ${device_name} Volts
+      unit_of_measurement: V
+    power:
+      name: ${device_name} Watt
+      unit_of_measurement: W
+      id: "energy_temp_Wattage"
+    change_mode_every: 8
+    update_interval: 10s

@@ -1,0 +1,7 @@
+substitutions:
+  node_name: deltaco3
+  device_name: !secret deltaco3_name
+
+packages:
+  wifi: !include common/wifi.yaml
+  device_base: !include common/deltaco_base.yaml
