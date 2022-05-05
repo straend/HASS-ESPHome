@@ -1,0 +1,84 @@
+
+esphome:
+    name: servofeeder
+    build_path: ./build/servofeeder
+    on_boot:
+      then:
+        - number.set:
+            id: pill_number
+            value: !lambda |-
+              return (float) id(my_global_int);
+
+packages:
+    wifi: !include common/wifi.yaml
+    device_base: !include common/device_base.yaml
+
+esp32:
+  board: m5stack-atom
+  framework:
+    type: arduino
+
+web_server:
+  port: 80
+
+captive_portal:
+
+globals:
+   - id: my_global_int
+     type: int
+     restore_value: yes
+     initial_value: '0'
+
+button:
+  - platform: template
+    name: "Next Pill"
+    id: pill_button
+    on_press:
+      - lambda: |-
+          int cur = id(my_global_int);
+          if (cur > 5) {
+            cur = 0;
+          } else {
+            cur += 1;
+          }
+          id(my_global_int) = cur;
+          auto call = id(pill_number).make_call();
+          call.set_value(cur);
+          call.perform();
+
+number:
+  - platform: template
+    name: Pill Control
+    id: pill_number
+    min_value: 0
+    max_value: 6
+    step: 1
+    set_action:
+      then:
+        - lambda: |-
+            id(my_global_int) = x;
+        - servo.write:
+            id: my_servo
+            level: !lambda 'return (x*0.3334 -1);'
+
+time:
+  - platform: sntp
+    timezone: Europe/Helsinki
+    on_time:
+      - seconds: 0
+        minutes: 03
+        hours: 22
+        days_of_week: MON-SUN
+        then:
+          - button.press: pill_button
+          - delay: 5s
+          - button.press: pill_button
+servo:
+  - id: my_servo
+    output: pwm_output
+
+output:
+  - platform: ledc
+    id: pwm_output
+    pin: 25
+    frequency: 50 Hz
