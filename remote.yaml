@@ -15,158 +15,266 @@ packages:
   device_base: !include common/device_base.yaml
 
 remote_receiver:
-  pin:
-    number: GPIO13
-    mode: INPUT_PULLUP
-    inverted: True
-  dump: all
+  - id: IR_receiver
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+      inverted: True
+    dump: all
+  - id: RF_receiver
+    pin:
+      number: GPIO5
+      #mode: INPUT_PULLDOWN
+    dump: rc_switch
+    tolerance: 50%
+    filter: 250us
+    idle: 4ms
+    buffer_size: 2kb
 
 binary_sensor:
+  - name: RF ON_1
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000111101101111'
+      protocol: 1
+  - name: RF OFF_1
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000011101100000'
+      protocol: 1
+  - name: RF ON_2
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000101101101000'
+      protocol: 1
+  - name: RF OFF_2
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000001101100100'
+      protocol: 1
+  - name: RF ON_3
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000110101101100'
+      protocol: 1
+  - name: RF OFF_3
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000010101100010'
+      protocol: 1
+  - name: RF ON_4
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000111001101110'
+      protocol: 1
+  - name: RF OFF_4
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000011001100001'
+      protocol: 1
+  - name: RF ON_ALL
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000010001100011'
+      protocol: 1
+  - name: RF OFF_ALL
+    platform: remote_receiver
+    receiver_id: RF_receiver
+    rc_switch_raw:
+      code: '00100110101011010000100001101011'
+      protocol: 1
+
   - name: Samsung NUM_1
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772784863
   - name: Samsung NUM_2
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772817503
   - name: Samsung NUM_3
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772801183
   - name: Samsung NUM_4
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772780783
   - name: Samsung NUM_5
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772813423
   - name: Samsung NUM_6
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772797103
   - name: Samsung NUM_7
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772788943
   - name: Samsung NUM_8
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772821583
   - name: Samsung NUM_9
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772805263
   - name: Samsung NUM_0
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772811383
   - name: Samsung ENTER
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772782313
   - name: Samsung PRE_CHANNEL
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772827703
   - name: Samsung VOL_PLUS
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772833823
   - name: Samsung VOL_MINUS
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772829743
   - name: Samsung MUTE
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772837903
   - name: Samsung SOURCE
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772809343
   - name: Samsung CHLIST
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772831273
   - name: Samsung MENU
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772799143
   - name: Samsung FAV
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772785373
   - name: Samsung tools
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772830253
   - name: Samsung return
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772783333
   - name: Samsung EXIT
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772839943
   - name: Samsung INFO
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772822603
   - name: Samsung LEFT
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772819033
   - name: Samsung UP
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772778233
   - name: Samsung RIGHT
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772794553
   - name: Samsung DOWN
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772810873
   - name: Samsung ENTER
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772782313
   - name: Samsung RED
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772790473
   - name: Samsung GREEN
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772786903
   - name: Samsung YELLOW
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772819543
   - name: Samsung BLUE
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772803223
   - name: Samsung TTMIX
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772789963
   - name: Samsung GUIDE
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772838413
   - name: Samsung SUB
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772818523
   - name: Samsung POWER
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772793023
   - name: Samsung TV
     platform: remote_receiver
+    receiver_id: IR_receiver
     samsung:
       data: 3772831783
